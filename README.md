@@ -2,6 +2,40 @@
 
 브라질 이커머스 Olist의 주문, 상품, 리뷰, 판매자 데이터를 분석한 수업 프로젝트입니다. Colab에서 학습한 모델을 파일로 저장한 뒤 Streamlit 대시보드에서 불러왔습니다. 분석 Q&A에서는 사실표와 설명서를 검색해 답에 근거 ID를 붙이고, 실제로 검색된 자료와 답변을 비교했습니다.
 
+## 처음 방문했다면 여기서 시작하세요
+
+GitHub에서 내려받는 ZIP에는 대시보드 코드와 설치 목록이 들어 있습니다. 수업용 Colab 노트북, 원본 데이터, 배포용 데이터·모델 파일은 별도로 준비해야 합니다. 가지고 있는 자료에 따라 아래에서 시작할 단계를 고르세요.
+
+| 가지고 있는 자료 | 실행할 수 있는 범위 |
+| --- | --- |
+| GitHub ZIP만 있음 | 패키지를 설치한 뒤 대시보드 홈 화면을 열 수 있습니다. 홈의 수치는 실습 당시 결과를 표시합니다. |
+| 기존 실습의 배포 ZIP 또는 완성된 data·model 폴더가 있음 | app.py 옆에 파일을 배치하면 분석과 예측을 실행할 수 있습니다. Q&A는 선택한 채널의 자료와 OpenAI API 키도 필요합니다. |
+| 수업용 노트북과 원본 데이터가 있음 | 아래 STEP 1~4를 따라 데이터와 모델을 다시 만들 수 있습니다. 필요한 수업 자료가 없다면 먼저 수업 자료 제공처에서 받아야 합니다. |
+
+### GitHub ZIP으로 홈 화면 먼저 열기 · Windows
+
+1. 이 저장소에서 **Code → Download ZIP**을 눌러 압축을 풉니다.
+2. **Python 3.12**를 설치하고 PowerShell에서 아래 명령으로 버전을 확인합니다.
+
+~~~powershell
+py -3.12 --version
+~~~
+
+3. VS Code에서 **파일 → 폴더 열기**를 눌러 압축을 푼 폴더 중 **app.py와 requirements.txt가 바로 보이는 폴더**를 엽니다. **터미널 → 새 터미널**을 열고 아래 명령을 한 줄씩 실행합니다.
+
+~~~powershell
+Get-ChildItem app.py, requirements.txt
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m streamlit run app.py
+~~~
+
+첫 줄에서 두 파일이 모두 보여야 합니다. 이 순서로 실행하면 .venv가 app.py 옆에 생기므로 새 컴퓨터에서는 위 명령을 그대로 사용합니다. 설치가 끝난 뒤 실행 명령을 입력하고, 터미널의 Local URL을 브라우저에서 엽니다. 기본 주소는 http://localhost:8501 입니다. 다음에 다시 열 때는 같은 폴더에서 마지막 명령만 실행하면 됩니다.
+
+### 분석·예측 메뉴까지 실행하기
+
+배포 ZIP을 풀어 data와 model 폴더를 **app.py 바로 옆**에 복사합니다. 기존 실습 환경에서 생성한 배포 ZIP에 requirements.txt가 따로 있다면 해당 파일을 앱 폴더에 복사하고 설치 명령을 다시 실행합니다. 이미 배포 파일을 갖고 있다면 모델 학습을 반복할 필요가 없습니다. 각 메뉴의 파일명은 아래 폴더 구조를 확인하세요.
+
 ## STEP 1~4 실행 순서
 
 | 단계 | 어디에서 실행하나요? | 무엇을 확인하나요? |
@@ -52,20 +86,9 @@ olist-dashboard/
 
 규정집 PDF가 배포 ZIP에 빠져 있으면 Drive의 Olist/rag에서 내려받아 로컬 data 폴더에 넣습니다. 규정집은 수업용 가상 규정입니다. data/data 또는 model/model처럼 폴더가 이중으로 들어가지 않도록 확인합니다.
 
-### 3. Windows에서 대시보드 실행하기
+### 3. 대시보드 실행과 종료
 
-VS Code에서 **터미널 → 새 터미널**을 열고, 현재 위치에서 app.py와 requirements.txt가 보이는지 확인합니다. 아래 명령은 프로젝트 폴더 안에 .venv를 만드는 경우입니다.
-
-~~~powershell
-Get-ChildItem app.py, requirements.txt
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m streamlit run app.py
-~~~
-
-가상환경을 앱 폴더의 **한 단계 바깥**에 이미 만들었다면, 앱 폴더에서 Python 경로를 ..\.venv\Scripts\python.exe로 바꿉니다. 학습 환경과 다른 버전에서 모델을 읽는 문제가 생기면 배포 ZIP의 requirements.txt를 확인합니다.
-
-터미널에 표시된 Local URL을 브라우저에서 엽니다. 기본 주소는 http://localhost:8501 입니다. 처음 실행할 때 Email:이 나오면 Enter를 눌러 건너뛸 수 있습니다. 대시보드를 쓰는 동안 터미널을 열어두고, 종료할 때는 Ctrl+C를 누릅니다. 다음에 켤 때는 Streamlit 실행 명령만 다시 입력합니다.
+위의 ‘GitHub ZIP으로 홈 화면 먼저 열기’에서 안내한 Windows 명령을 사용합니다. 처음 실행할 때 터미널에 Email:이 나오면 Enter로 건너뛸 수 있습니다. 대시보드가 켜져 있는 동안 터미널을 열어두고, 종료할 때는 Ctrl+C를 누릅니다.
 
 ### 4. 분석 Q&A 실행하기
 
@@ -80,6 +103,7 @@ py -3.12 -m venv .venv
 | KeyError: 'review_fill' | 예전 part8_seller_segment.pkl에 판매자 데이터 표가 들어 있었습니다. PART 8을 모두 실행해 군집 모델, 스케일러, 입력 열, 결측 대체값을 다시 저장합니다. PART 9·10과 배포 준비 노트북에서 새 파일을 사용하고, 로컬 model 폴더의 기존 파일도 교체합니다. |
 | FileNotFoundError: orders.parquet | 로컬의 app.py 옆 data 폴더에 orders.parquet와 items.parquet를 넣습니다. 판매자 이탈 화면에는 seller_table.csv도 필요합니다. |
 | FileNotFoundError: part9_seller_churn.pkl | 로컬 model 폴더에 STEP 1에서 만든 모델 4개가 모두 있는지 확인합니다. 파일 복사 후 브라우저를 새로고침하고, 모델을 바꿨다면 앱을 종료했다가 다시 실행합니다. |
+| No installed Python found 또는 Python 3.12를 찾지 못함 | Python 3.12 설치 후 새 터미널을 열고 py -3.12 --version을 다시 확인합니다. |
 | Could not open requirements file | 터미널이 압축을 푼 바깥 폴더를 가리키고 있었습니다. app.py와 requirements.txt가 함께 있는 안쪽 폴더로 이동한 뒤 설치합니다. |
 | Colab에서 Olist/rag를 찾지 못함 | 노트북 기본 경로에 Data_Analysis가 있었지만 실제 Drive에서는 Colab Notebooks 바로 아래에 Olist가 있었습니다. base_path에서 Data_Analysis를 빼고 셀 2를 다시 실행합니다. |
 | 채널 C에서 규정집을 찾지 못함 | olist_seller_policy.pdf를 Colab에서는 Olist/rag에, 대시보드에서는 로컬 data에 배치합니다. |
